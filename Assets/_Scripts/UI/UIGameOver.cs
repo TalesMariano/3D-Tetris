@@ -22,6 +22,10 @@ public class UIGameOver : MonoBehaviour
 
     #endregion
 
+
+    /// <summary>
+    /// When game over happen, show gameover screen and hide normal gameplay UI
+    /// </summary>
     void GameOver()
     {
         gameplayUI.SetActive(false);

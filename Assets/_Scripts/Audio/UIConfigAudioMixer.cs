@@ -8,15 +8,28 @@ public class UIConfigAudioMixer : MonoBehaviour
 {
     public AudioMixer audioMixer;
 
+    [Tooltip("Slider for Master Volume")]
     public Slider sliderMaster;
     public Slider sliderBGM;
     public Slider sliderSFX;
+
+    private void Start()
+    {
+        // Setup Sliders values
+        sliderMaster.minValue = 0.0001f;
+        sliderMaster.maxValue = 0f;
+
+        sliderBGM.minValue = 0.0001f;
+        sliderBGM.maxValue = 0f;
+
+        sliderSFX.minValue = 0.0001f;
+        sliderSFX.maxValue = 0f;
+    }
 
     private void OnEnable()
     {
         UpdateSlider();
     }
-
 
     public void SetVolumeMaster(float value)
     {
@@ -33,6 +46,9 @@ public class UIConfigAudioMixer : MonoBehaviour
         audioMixer.SetFloat("SFX Volume", Mathf.Log10(value) * 20);
     }
 
+    /// <summary>
+    /// Update Sliders based on Audio Mixer values
+    /// </summary>
     [ContextMenu("UpdateSlider")]
     void UpdateSlider()
     {

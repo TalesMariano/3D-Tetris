@@ -11,7 +11,7 @@ public class GameplayAudio : MonoBehaviour
     public AudioClip aBlockPlaced;
     public AudioClip aLineCompleted;
 
-    //events
+    #region Events
     private void OnEnable()
     {
         gameLogic.OnBlockPlaced += PlaySFX;
@@ -21,8 +21,14 @@ public class GameplayAudio : MonoBehaviour
     {
         gameLogic.OnBlockPlaced -= PlaySFX;
     }
+    #endregion
 
 
+    /// <summary>
+    /// Play block placed sfx
+    /// If Lineis complete, play line completed sfx
+    /// </summary>
+    /// <param name="lineCompleted"></param>
     void PlaySFX(bool lineCompleted)
     {
         if(lineCompleted)
@@ -30,5 +36,4 @@ public class GameplayAudio : MonoBehaviour
         else
             audioSource.PlayOneShot(aBlockPlaced);
     }
-
 }

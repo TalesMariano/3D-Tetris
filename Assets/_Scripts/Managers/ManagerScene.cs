@@ -8,61 +8,43 @@ public class ManagerScene : MonoBehaviour
     public static ManagerScene instance;
 
     [Header("References")]
+    [Tooltip("Transition Animation Animator")]
     public Animator anim;
-
-    #region Events
-
-    private void OnEnable()
-    {
-        SceneManager.sceneLoaded += OnSceneLoaded;
-    }
-
-    private void OnDisable()
-    {
-        SceneManager.sceneLoaded -= OnSceneLoaded;
-    }
-
-    #endregion
-
 
     private void Awake()
     {
-        // if the singleton hasn't been initialized yet
+        // Singleton Pattern
         if (instance != null && instance != this)
         {
             Destroy(this.gameObject);
-            return;//Avoid doing anything else
+            return;
         }
 
         instance = this;
         DontDestroyOnLoad(this.gameObject);
     }
 
+    /// <summary>
+    /// Load Scene asynchronously
+    /// </summary>
+    /// <param name="numScene">Index of scene</param>
     public void LoadScene(int numScene)
     {
-        AnimateTransition();
-        //SceneManager.LoadScene(numScene);
+        StartAnimateTransition();
         StartCoroutine(LoadYourAsyncScene(numScene));
     }
 
-    void AnimateTransition()
+    void StartAnimateTransition()
     {
-        //anim.ResetTrigger("Exit");
-        //anim.SetTrigger("Enter");
-
         anim.SetBool("LoadingScene", true);
     }
 
-    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-        //anim.SetTrigger("Exit");
-        //anim.SetBool("LoadingScene", false);
-    }
-
+    /// <summary>
+    /// Reload current Scene
+    /// </summary>
     public void ReloadScene()
     {
         int numScene = SceneManager.GetActiveScene().buildIndex;
-
         LoadScene(numScene);
     }
 
@@ -71,16 +53,12 @@ public class ManagerScene : MonoBehaviour
     {
         yield return new WaitForSeconds(0.3f); // wait start of transition animation
 
-
-        // The Application loads the Scene in the background as the current Scene runs.
-        // This is particularly good for creating loading screens.
-
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(numScene);
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(numScene);   // Load scene Async
 
 
-        bool animDone = false;
+        bool animDone = false;  // if the start part of animation  transition is over
 
-        // Wait until the asynchronous scene fully loads
+        // Wait until the asynchronous scene fully loads and animation is finished
         while (!asyncLoad.isDone || !animDone)
         {
             animDone = anim.GetCurrentAnimatorStateInfo(0).IsName("Enter") && (anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f);

@@ -4014,18 +4014,29 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 10
     m_MaxSize: 40
-    m_Alignment: 0
+    m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: '
+  m_Text: 'Game made by Tales Mariano - TalesMariano.com
 
 
+    Kalinka 8-bit - https://youtu.be/R27TzU35jzw
 
-    <a href=''https://www.freepik.com/vectors/background''>Background
-    vector created by dukepope.com - www.freepik.com</a>'
+
+    Katyusha
+    8-bit - https://youtu.be/O7PKpR6D4Aw
+
+
+    Sound Effects - https://sfxr.me/
+
+
+    Background
+    vector created by dukepope.com - www.freepik.com
+
+'
 --- !u!222 &1566340093
 CanvasRenderer:
   m_ObjectHideFlags: 0

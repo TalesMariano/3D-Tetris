@@ -7,13 +7,14 @@ public class GameLogic : MonoBehaviour
     [Header("References")]
     public Spawner spawner;
     public GridArea gridArea;
-    public TempInputMove tempInput;
     public Tetrimino mainTetrimino;
 
     [Header("Settings")]
+    public GameState gameState = GameState.Playing;
     public bool blockMoving = true;
     public float timeMoveDown = 1;
     float moveTime = 0;
+
 
 
     #region Events
@@ -56,14 +57,12 @@ public class GameLogic : MonoBehaviour
 
     private void Start()
     {
-        // test start
-        SpawnTetrimino();
+        StarGame();
     }
 
     private void Update()
     {
-        // Test Move Down
-        if (blockMoving)
+        if (gameState == GameState.Playing && blockMoving)
         {
             moveTime += Time.deltaTime;
 
@@ -77,48 +76,52 @@ public class GameLogic : MonoBehaviour
     }
 
 
+    public void StarGame()
+    {
+        // Start Game
+        SpawnTetrimino();
+        gameState = GameState.Playing;
+        blockMoving = true;
+    }
+
+    #region Movement
+
+    public void MovePieceLeft()
+    {
+        mainTetrimino.MoveLeft();
+    }
+
+    public void MovePieceRight()
+    {
+        mainTetrimino.MoveRight();
+    }
+
+    public void MovePieceDown()
+    {
+        mainTetrimino.MoveDown();
+        moveTime = 0;
+    }
+
+    public void RotatePiece()
+    {
+        mainTetrimino.Rotate();
+    }
+
+    #endregion
+
     public void SpawnTetrimino()
     {
         mainTetrimino = spawner.SpawnTetrimino();
-        tempInput.tetrimino = mainTetrimino;
 
         mainTetrimino.OnPlaced += SpawnTetrimino;
 
-        // Test
         mainTetrimino.gridArea = gridArea;
     }
 
-    [ContextMenu("test Pos")]
-    void TestDownPos()
+    public enum GameState
     {
-        Vector2Int[] array = mainTetrimino.BlockPos();
-        for (int i = 0; i < array.Length; i++)
-        {
-            Vector2Int blockPos = array[i];
-            Vector2Int tPos = blockPos + Vector2Int.down;
-
-            if(gridArea.blocks[tPos.x, tPos.y] == null)
-                Debug.Log(gridArea.blocks[tPos.x, tPos.y]);
-            else
-                Debug.Log(gridArea.blocks[tPos.x, tPos.y], gridArea.blocks[tPos.x, tPos.y].gameObject);
-
-
-
-
-            if (!gridArea.ValidPos(tPos))
-            {
-                
-
-                /*
-                //test
-                if (blockPos.y - 1 > 0) // Inside map grid
-                {
-                    Debug.Log(blocks[blockPos.x, blockPos.y - 1], blocks[blockPos.x, blockPos.y - 1].gameObject);
-                }*/
-
-            }
-
-        }
+        Playing,
+        Paused,
+        GameOver
     }
-
 }

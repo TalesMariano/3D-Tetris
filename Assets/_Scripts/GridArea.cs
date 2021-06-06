@@ -44,20 +44,7 @@ public class GridArea : MonoBehaviour
 
     public void PlaceBlock(Tetrimino tetrimino)
     {
-        /*
-        //Old
-        for (int i = 0; i < tetrimino.blocks.Length; i++)
-        {
-            tetrimino.blocks[i].transform.parent = transform;
-
-            Vector2Int tempPos = new Vector2Int((int)tetrimino.blocks[i].transform.position.x, (int)tetrimino.blocks[i].transform.position.y);
-
-            blocks[tempPos.x, tempPos.y] = tetrimino.blocks[i];
-        }
-        */
-
         Vector2Int[] blockPositions = tetrimino.BlockPos();
-
 
         // Check Game Over
         if (CheckGameOver(blockPositions))
@@ -65,7 +52,6 @@ public class GridArea : MonoBehaviour
             OnBlockOverLimit?.Invoke();
             return;
         }
-
 
         for (int i = 0; i < blockPositions.Length; i++)
         {
@@ -93,8 +79,6 @@ public class GridArea : MonoBehaviour
             if (!ValidPos(blockPos + tetrimino.nextPosRelative))
                 return false;
         }
-
-
         return true;
     }
 
@@ -107,7 +91,6 @@ public class GridArea : MonoBehaviour
             if (!ValidPos(blockPos))
                 return false;
         }
-
         return true;
     }
 
@@ -120,12 +103,8 @@ public class GridArea : MonoBehaviour
             {
                 return true;
             }
-                
         }
-
-
         return false;
-
     }
 
 
@@ -210,31 +189,7 @@ public class GridArea : MonoBehaviour
             return false;
     }
 
-    public Vector2Int AjustPos(Vector2Int[] blockPositions)
-    {
-        Vector2Int ajustDirection = Vector2Int.zero;
 
-
-        for (int i = 0; i < blockPositions.Length; i++)
-        {
-            //Check Left
-            
-
-
-
-        }
-
-
-        //Check Left
-        do
-        {
-
-
-
-
-
-        } while (true);
-    }
 
     public Vector2Int AjustPosSingle(Vector2Int pos)
     {
@@ -245,10 +200,7 @@ public class GridArea : MonoBehaviour
         {
             
         }
-
-
-
-
+        
         return Vector2Int.zero;
     }
 
@@ -328,10 +280,7 @@ public class GridArea : MonoBehaviour
                 horizontalMove--;
             }   
         }
-
-
-
-
+        
         return Vector2Int.right * horizontalMove;
     }
 
