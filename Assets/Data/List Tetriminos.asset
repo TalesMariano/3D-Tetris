@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92c4d0943473c3244b21a4fd66abab20, type: 3}
+  m_Name: List Tetriminos
+  m_EditorClassIdentifier: 
+  tetriminos:
+  - {fileID: 2981099267550636526, guid: 56a014cc23666d54383a0fed2cd486d4, type: 3}
+  - {fileID: 2981099267550636526, guid: a4dd62a2b94b10a45af10f60fb301edc, type: 3}
+  - {fileID: 2981099267550636526, guid: af0482c0e80fa1d4490bdb1e583bcc90, type: 3}
+  - {fileID: 2981099267550636526, guid: 4c140c1befe385c41b3a9ea82783614e, type: 3}
+  - {fileID: 2981099267550636526, guid: e8b8d5200b6d1b34cbe900e9993f6179, type: 3}
+  - {fileID: 2981099267550636526, guid: dca325047f4e6a2489c3765585cd4962, type: 3}
+  - {fileID: 2981099267550636526, guid: 4e5d6923e37e00140a8688b46596d488, type: 3}
