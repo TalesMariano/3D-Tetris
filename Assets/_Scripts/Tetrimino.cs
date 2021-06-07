@@ -94,7 +94,7 @@ public class Tetrimino : MonoBehaviour
     public void MoveLeft()
     {
         // If tetrimino position to the left is invalid, end method
-        if(!gridArea.IsPositionsValid(MovePosDir(BlockPos(), Vector2Int.left)))
+        if(!gridArea.ArePositionsValid(MovePosDir(BlockPos(), Vector2Int.left)))
             return;
 
         transform.localPosition += Vector3.left;
@@ -104,7 +104,7 @@ public class Tetrimino : MonoBehaviour
     public void MoveRight()
     {
         // If tetrimino position to the left is invalid, end method
-        if (!gridArea.IsPositionsValid(MovePosDir(BlockPos(), Vector2Int.right)))
+        if (!gridArea.ArePositionsValid(MovePosDir(BlockPos(), Vector2Int.right)))
             return;
 
         transform.localPosition += Vector3.right;

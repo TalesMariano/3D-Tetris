@@ -7,28 +7,28 @@ public class GridArea : MonoBehaviour
     public int heith = 20;
     public int width = 10;
 
-    public Block[,] blocks;    // temp public
+    Block[,] blocks;
 
     List<int> linesToClear = new List<int>();
-
 
     public Action<bool> OnBlockPlaced;
     public Action<int> OnLineComplete;
     public Action OnBlockOverLimit;
 
-
-
     private void Start()
     {
-        //Ajust height
+        //Ajust height, so new blocks can be spawned outside the play area
         heith += 3;
 
         blocks = new Block[width, heith];
-
     }
 
-
-    bool CheckGameOver(Vector2Int[] positions)
+    /// <summary>
+    /// Check if block positions are over defaut play area
+    /// Used to check game over 
+    /// </summary>
+    /// <param name="positions">Block Positions</param>
+    bool CheckBlockPosOverGridArea(Vector2Int[] positions)
     {
         int heightLimit = 20;
 
@@ -37,17 +37,19 @@ public class GridArea : MonoBehaviour
             if (pos.y > heightLimit)
                 return true;
         }
-
         return false;
     }
 
-
+    /// <summary>
+    /// Place Tetrinimo block on Grid
+    /// </summary>
+    /// <param name="tetrimino">Tetrimino block to place</param>
     public void PlaceBlock(Tetrimino tetrimino)
     {
         Vector2Int[] blockPositions = tetrimino.BlockPos();
 
         // Check Game Over
-        if (CheckGameOver(blockPositions))
+        if (CheckBlockPosOverGridArea(blockPositions))
         {
             OnBlockOverLimit?.Invoke();
             return;
@@ -72,6 +74,9 @@ public class GridArea : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Return if all blocks in Tetrimino are in a valid position
+    /// </summary>
     public bool ValidPos(Tetrimino tetrimino)
     {
         foreach (var blockPos in tetrimino.BlockPos())
@@ -83,8 +88,10 @@ public class GridArea : MonoBehaviour
     }
 
 
-
-    public bool IsPositionsValid(Vector2Int[] positions)
+    /// <summary>
+    /// Return if all positions given are valid in grid
+    /// </summary>
+    public bool ArePositionsValid(Vector2Int[] positions)
     {
         foreach (var blockPos in positions)
         {
@@ -94,7 +101,11 @@ public class GridArea : MonoBehaviour
         return true;
     }
 
-
+    /// <summary>
+    /// Check if tetrimino block have arrived at bottom, or on top of another block
+    /// </summary>
+    /// <param name="tetrimino"></param>
+    /// <returns></returns>
     public bool CheckAriveBottom(Tetrimino tetrimino)
     {
         foreach (var blockPos in tetrimino.BlockPos())
@@ -107,7 +118,10 @@ public class GridArea : MonoBehaviour
         return false;
     }
 
-
+    /// <summary>
+    /// Check all rows for full lines
+    /// </summary>
+    /// <returns>Return true if any </returns>
     bool CheckEachLineFull()
     {
         for (int y = 0; y < blocks.GetLength(1); y++)
@@ -126,7 +140,6 @@ public class GridArea : MonoBehaviour
         }
 
         return linesToClear.Count > 0;
-  
     }
 
     void ClearLines()
@@ -141,7 +154,10 @@ public class GridArea : MonoBehaviour
         linesToClear.Clear();
     }
 
-
+    /// <summary>
+    /// Remove all blocks of "numLine" row
+    /// </summary>
+    /// <param name="numLine"></param>
     void ClearLine(int numLine)
     {
         for (int i = 0; i < blocks.GetLength(0); i++)
@@ -160,6 +176,11 @@ public class GridArea : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Move all rows above numRow one line down
+    /// Used to clear completed line
+    /// </summary>
+    /// <param name="numRow"></param>
     void MoveGridDown(int numRow)
     {
         // Move Lines Down
@@ -190,159 +211,11 @@ public class GridArea : MonoBehaviour
     }
 
 
-
-    public Vector2Int AjustPosSingle(Vector2Int pos)
-    {
-        Vector2Int ajustDirection = Vector2Int.zero;
-
-        // move left
-        for (int i = 0; i < 2; i++)
-        {
-            
-        }
-        
-        return Vector2Int.zero;
-    }
-
-    public void AjustLeft( Tetrimino tetrimino)
-    {
-        Vector2Int[] blockPositions = tetrimino.BlockPos();
-
-        int numMove = 0;
-
-        // Calculate number of moves ajusts
-        for (int i = 0; i < blockPositions.Length; i++)
-        {
-            if (blockPositions[i].x < 0)
-                numMove++;
-
-        }
-
-        Debug.Log("Num Moves " + numMove);
-
-        // Do Moves
-        for (int i = 0; i < numMove; i++)
-        {
-            tetrimino.MoveRight();
-        }
-    }
-
-    public void AjustRight(Tetrimino tetrimino)
-    {
-        Vector2Int[] blockPositions = tetrimino.BlockPos();
-
-        int numMove = 0;
-
-        // Calculate number of moves ajusts
-        for (int i = 0; i < blockPositions.Length; i++)
-        {
-            if (blockPositions[i].x >= width)
-                numMove++;
-        }
-
-        Debug.Log("Num Moves " + numMove);
-
-        // Do Moves
-        for (int i = 0; i < numMove; i++)
-        {
-            tetrimino.MoveLeft();
-        }
-    }
-
-
-    Vector2Int AjustRotation(Tetrimino tetrimino)
-    {
-        // base block position
-        Vector2Int[] blockPositions = tetrimino.BlockPos();
-
-        int horizontalMove = 0;
-
-        // Calculate ajust from left
-        for (int i = 0; i < blockPositions.Length; i++)
-        {
-            if (blockPositions[i].x < 0)
-                horizontalMove++;
-        }
-
-        // Calculate ajust from left
-        for (int i = 0; i < blockPositions.Length; i++)
-        {
-            if (blockPositions[i].x >= width)
-            {
-                //if need to move both right and left, cannot rotate
-                if (horizontalMove > 0)
-                {
-                    // return -1, meaning rotation is invalid
-                    return -Vector2Int.one;
-                }
-
-
-                horizontalMove--;
-            }   
-        }
-        
-        return Vector2Int.right * horizontalMove;
-    }
-
-
     /// <summary>
-    /// 
+    /// Check which positions in array are invalid, and return a new array with only invalid position
     /// </summary>
-    /// <param name="positions"></param>
-    /// <param name="direction"></param>
-    /// <param name="numTries">num of movements it will try before give up</param>
-    /// <returns>The new position if valid, null if there is no valid position</returns>
-    public Vector2Int[] GetNextValidPositionDirection(Vector2Int[] positions, Vector2Int direction, int numTries = 2)
-    {
-        for (int i = 0; i < numTries; i++)
-        {
-            bool valid = true;
-
-            foreach (var pos in positions)
-            {
-                valid = valid && ValidPos(pos + direction * i);
-            }
-
-            if (valid)  // return new position if valid
-            {
-                for (int j = 0; j < positions.Length; j++)
-                {
-                    positions[j] += direction * j;
-                }
-                return positions;
-            }
-                
-        }
-
-        return null;
-    }
-
-
-    public int GetNumMovementsValidPositionDirection(Vector2Int[] positions, Vector2Int direction, int numTries = 2)
-    {
-        for (int i = 0; i < numTries; i++)
-        {
-            bool valid = true;
-
-            foreach (var pos in positions)
-            {
-                valid = valid && ValidPos(pos + direction * i);
-            }
-
-            if (valid)  // return new position if valid
-            {
-                for (int j = 0; j < positions.Length; j++)
-                {
-                    positions[j] += direction * j;
-                }
-                return numTries;
-            }
-
-        }
-
-        return -1;
-    }
-
+    /// <param name="positions">Position array</param>
+    /// <returns>New array with only the invalid blocks</returns>
     public Vector2Int[] GetInvalidBlocks(Vector2Int[] positions)
     {
         List<Vector2Int> invalidPositions = new List<Vector2Int>();
@@ -375,6 +248,5 @@ public class GridArea : MonoBehaviour
                     Gizmos.DrawWireCube(new Vector3(x,y), Vector3.one * 0.5f);
             }
         }
-
     }
 }

@@ -17,13 +17,13 @@ public class UIConfigAudioMixer : MonoBehaviour
     {
         // Setup Sliders values
         sliderMaster.minValue = 0.0001f;
-        sliderMaster.maxValue = 0f;
+        sliderMaster.maxValue = 1f;
 
         sliderBGM.minValue = 0.0001f;
-        sliderBGM.maxValue = 0f;
+        sliderBGM.maxValue = 1f;
 
         sliderSFX.minValue = 0.0001f;
-        sliderSFX.maxValue = 0f;
+        sliderSFX.maxValue = 1f;
     }
 
     private void OnEnable()

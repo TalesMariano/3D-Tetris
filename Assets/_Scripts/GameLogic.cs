@@ -15,8 +15,6 @@ public class GameLogic : MonoBehaviour
     public float timeMoveDown = 1;
     float moveTime = 0;
 
-
-
     #region Events
     public Action<int> OnLineComplete;  // int - Number Lines
     public Action<bool> OnBlockPlaced; // bool - line completed
@@ -54,7 +52,6 @@ public class GameLogic : MonoBehaviour
 
     #endregion
 
-
     private void Start()
     {
         StarGame();
@@ -62,8 +59,10 @@ public class GameLogic : MonoBehaviour
 
     private void Update()
     {
-        if (gameState == GameState.Playing && blockMoving)
+        if (gameState == GameState.Playing && blockMoving)  // If game is playing and block moving is enabled
         {
+            // Move current controlled block down after "timeMoveDown" seconds
+            // Moving down tetrimino with controller resets movedown timer
             moveTime += Time.deltaTime;
 
             if (moveTime>timeMoveDown)
@@ -75,7 +74,9 @@ public class GameLogic : MonoBehaviour
         }
     }
 
-
+    /// <summary>
+    /// Start game, setting up base vars and spawning Block
+    /// </summary>
     public void StarGame()
     {
         // Start Game
@@ -109,8 +110,16 @@ public class GameLogic : MonoBehaviour
 
     #endregion
 
+
+    /// <summary>
+    /// If gameState is palying, Spawn a tetrimino
+    /// Apply events and references to tetrimino
+    /// </summary>
     public void SpawnTetrimino()
     {
+        if (gameState != GameState.Playing)
+            return;
+
         mainTetrimino = spawner.SpawnTetrimino();
 
         mainTetrimino.OnPlaced += SpawnTetrimino;

@@ -293,7 +293,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   listTetriminos: {fileID: 11400000, guid: 95f2149bef5e4fe44a8d5576770047c3, type: 2}
-  spawnPos: {x: 4, y: 22}
 --- !u!1 &120190054
 GameObject:
   m_ObjectHideFlags: 0
@@ -489,7 +488,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 2407812689199729279, guid: acb1968779103e4429653d59712c7c5f, type: 2}
-  m_audioClip: {fileID: 8300000, guid: 0a717b9111c371741a4316fe8652cfd6, type: 3}
+  m_audioClip: {fileID: 8300000, guid: e0ea53959b21610419a46e959a216631, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -2082,8 +2081,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawner: {fileID: 50659698}
   gridArea: {fileID: 541125673}
-  tempInput: {fileID: 0}
   mainTetrimino: {fileID: 0}
+  gameState: 0
   blockMoving: 1
   timeMoveDown: 0.5
 --- !u!1 &1309122455

@@ -1,13 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class GameInput : MonoBehaviour
 {
     public GameLogic gameLogic;
 
-    bool horisontalStickDownLast;
-    bool verticalStickDownLast;
+    bool horisontalStickDownLast;   // Used to register only one input by press
+    bool verticalStickDownLast; // Used to register only one input by press
 
     private void Update()
     {
